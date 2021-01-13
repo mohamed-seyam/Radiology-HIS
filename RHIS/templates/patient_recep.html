@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- patient profile-->
+
+<div class="container">
+    <div class="row">
+        <div class="col md-12">
+                <table class="table table-hover table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>SSN</th>
+                            <th>Reservation Date</th>
+                            <th>Email</th>
+                            <th>Gender</th>
+                            <th>Address</th>
+                            <th>Scan Type</th>
+                            <th>Scan Fees</th>
+                            <th>Action</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in p_data %}
+                        <tr>
+                            <td>{{row.scan_owner.id}}</td>
+                            <td>{{row.scan_owner.name}}</td>
+                            <td>{{row.scan_owner.ssn}}</td>
+                            <td>{{row.scan_date.strftime('%Y-%m-%d |%H:%M:%S') }}</td>
+                            <td>{{row.scan_owner.email}}</td>
+                            <td>{{row.scan_owner.gender}}</td>
+                            <td>{{row.scan_owner.address}}</td>
+                            <td>{{row.scan_type}}</td>
+                            <td>{{row.fees}}</td>
+                            <td>
+                                <a href="/patient/{{p_data.id}}" class="btn btn-warning btn-xs" data-toggle="modal"
+                                    data-target="#modaledit{{p_data.id}}">Edit</a>
+
+                                <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs"
+                                    onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
+
+
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <!-- Modal Edit Employee-->
+                        <div id="modaledit{{p_data.id}}" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Update Information</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{url_for('update_patient')}}" method="POST">
+                                            <div class="form-group">
+                                                <label>Name:</label>
+                                                <input type="hidden" name="id" value="{{p_data.id}}">
+                                                <input type="text" class="form-control" name="name"
+                                                    value="{{p_data.name}}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>SSN:</label>
+                                                <input type="text" class="form-control" name="ssn" value="{{p_data.ssn}}">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Email:</label>
+                                                <input type="text" class="form-control" name="email"
+                                                    value="{{p_data.email}}">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>gender:</label>
+                                                <input type="text" class="form-control" name="gender"
+                                                    value="{{p_data.gender}}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Address:</label>
+                                                <input type="text" class="form-control" name="address"
+                                                    value="{{p_data.address}}">
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn btn-primary" type="submit">Update</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+            </div>
+            <div class="modal-footer">
+                <a class="nav-item nav-link" href="{{ url_for('recep')}}">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
