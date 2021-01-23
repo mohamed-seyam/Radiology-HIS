@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for post in posts %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ scan.doctor }}</a>
+              <small class="text-muted">{{ scan.date_posted }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ scan.report_title }}</a></h2>
+            <p class="article-content">{{ scan.report_content }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

@@ -1,0 +1,136 @@
+{% extends "layout.html" %}
+{% block navbar %}
+    <a class="nav-item nav-link" href="{{ url_for('addDoctor') }}">Add Doctor</a>
+    <a class="nav-item nav-link" href="{{ url_for('addTechnician') }}">Add Technician</a>
+    <a class="nav-item nav-link" href="{{ url_for('addReceptionist') }}">Add Receptionist</a>
+    <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+{% endblock navbar %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+                <h2> Manage <b>Doctors</b>
+                    <button type="button" class="btn btn-success float-right "
+                        onclick=location.href='{{url_for("addDoctor")}}'>Add New Doctor
+                    </button>
+                </h2>
+
+                <table class="table table-hover table-striped mydatatable">
+                    <thead class="thead-dark">
+                        <tr> 
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>SSN</th>
+                            <th>Salary</th>
+                            <th>Speciality</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in doctors %}
+                            <tr>
+                                <td>{{row.id}}</td>
+                                <td>{{row.name}}</td>
+                                <td>{{row.ssn}}</td>
+                                <td>${{row.salary }}</td>
+                                <td>{{row.speciality}}</td>
+                                <td>{{row.email}}</td>
+                                <td><a href="{{url_for('doc_patients', id =row.id )}}"  class="btn btn-warning btn-xs">D Patients</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+                <h2> Manage <b>Technicians</b>
+                    <button type="button" class="btn btn-success float-right "
+                        onclick=location.href='{{url_for("addTechnician")}}'>Add New Technician
+                    </button>
+                </h2>
+
+                <table class="table table-hover table-striped mydatatable">
+                    <thead class="thead-dark">
+                        <tr> 
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>SSN</th>
+                            <th>Salary</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in technicians %}
+                            <tr>
+                                <td>{{ row.id }}</td>
+                                <td>{{ row.name }}</td>
+                                <td>{{ row.ssn }}</td>
+                                <td>${{row.salary }}</td>
+                                <td>{{ row.email }}</td>
+                                <td>{{ row.address }}</td>
+                                <td><a href="{{url_for('tech_patients', id =row.id )}}"  class="btn btn-warning btn-xs">T Patients</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+                <h2> Manage <b>Receptionists</b>
+                    <button type="button" class="btn btn-success float-right "
+                        onclick=location.href='{{url_for("addReceptionist")}}'>Add New Receptionist
+                    </button>
+                </h2>
+
+                <table class="table table-hover table-striped mydatatable">
+                    <thead class="thead-dark">
+                        <tr> 
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>SSN</th>
+                            <th>Salary</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in receptionists %}
+                            <tr>
+                                <td>{{ row.id }}</td>
+                                <td>{{ row.name }}</td>
+                                <td>{{ row.ssn }}</td>
+                                <td>${{row.salary }}</td>
+                                <td>{{ row.email }}</td>
+                                <td>{{ row.address }}</td>
+                                <td><a href="{{url_for('recep_patients', id =row.id )}}"  class="btn btn-warning btn-xs">R Patients</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $('.mydatatable').DataTable({
+            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]]
+        });
+    </script>
+{% endblock scripts %}

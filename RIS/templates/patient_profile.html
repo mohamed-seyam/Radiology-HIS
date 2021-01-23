@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block homepage %}
+    <a class="navbar-brand mr-4" href="{{ url_for('home') }}">Radiology</a>
+{% endblock homepage %}
+{% block navbar %}
+    <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+{% endblock navbar %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+                <h2>Welcome <b>{{ name }}</b></h2>
+                <table class="table table-striped table-bordered mydatatable" style="width: 100%;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Reservation Date</th>
+                            <th>Scan Type</th>
+                            <th>Doctor</th>
+                            <th>Technician</th>
+                            <th>Receptionist</th>
+                            <th>Scan Fees</th>
+                            <th>Report</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for scan in p_data %}
+                        {% if scan.image_file != 'default.jpg' and scan.report_title != None %}
+                                <tr>
+                                    <th>{{ scan.scan_date.strftime('%Y-%m-%d') }}</th>
+                                    <td>{{ scan.scan_type }}</td>
+                                    <th>{{ scan.doctor.name }}</th>
+                                    <th>{{ scan.technician.name }}</th>
+                                    <th>{{ scan.receptionist.name }}</th>
+                                    <th>{{ scan.fees }}</th>
+                                    <td><a href="{{ url_for('Report', scan_id=scan.id) }}" class="btn btn-success" >View Report</a></td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+        $('.mydatatable').DataTable({
+            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]]
+        });
+    </script>
+{% endblock scripts %}

@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block homepage %}
+    <a class="navbar-brand mr-4" href="{{ url_for('home') }}">Radiology</a>
+{% endblock homepage %}
+{% block navbar %}
+    <a class="nav-item nav-link" href="{{ url_for('doctor_history', id=current_user.id) }}">History</a>
+    <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+{% endblock navbar %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+                <h2> Manage <b>Patients Reports</b></h2>
+
+
+                <table class="table table-hover table-striped mydatatable">
+                    <thead class="thead-dark">
+                        <tr>
+                            
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Reservation Date</th>
+                            <th>Scan Type</th>
+                            <th>Receptionist</th>
+                            <th>Technition</th>
+                            <th>Doctor</th>
+                            <th>Scan Fees</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in p_data %}
+                        {% if row.report_title == None and row.image_file != 'default.jpg' %}
+                        <tr>
+                            <td>{{row.id}}</td>
+                            <td>{{row.patient.name}}</td>
+                            <td>{{row.patient.age}}</td>
+                            <td>{{row.scan_date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                            <td>{{row.scan_type}}</td>
+                            <td>{{row.receptionist.name}}</td>
+                            <td>{{row.technician.name}}</td>
+                            <td>{{row.doctor.name}}</td>
+                            <td>{{row.fees}}</td>
+                            <td>
+                                <a href="{{url_for('Report', scan_id =row.id )}}"  class="btn btn-warning btn-xs">Write Report</a>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                </table>
+            </div>
+
+
+            </tbody>
+
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+        $('.mydatatable').DataTable({
+            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]]
+        });
+    </script>
+{% endblock scripts %}

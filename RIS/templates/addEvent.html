@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block homepage %}
+    <a class="navbar-brand mr-4" href="{{ url_for('admin') }}">Radiology</a>
+{% endblock homepage %}
+{% block navbar %}
+    <a class="nav-item nav-link" href="{{ url_for('addDoctor') }}">Add Doctor</a>
+    <a class="nav-item nav-link" href="{{ url_for('addTechnician') }}">Add Technician</a>
+    <a class="nav-item nav-link" href="{{ url_for('addReceptionist') }}">Add Receptionist</a>
+    <a class="nav-item nav-link" href="{{ url_for('staff_meeting') }}">Add Staff Meeting</a>
+    <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+{% endblock navbar %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Add New Meeting</legend>
+                <div class="form-group">  
+                    {{ form.date.label(class = "form-control-label") }}
+                    {% if form.date.errors %}
+                    {{ form.date(class = "form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.date.errors %}
+                            <span> {{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                        {{ form.date(class = "form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-check">
+                    {{ form.doctors(class="form-check-input") }}
+                    {{ form.doctors.label(class="form-check-label") }}
+                </div>
+                <div class="form-check">
+                    {{ form.receptionists(class="form-check-input") }}
+                    {{ form.receptionists.label(class="form-check-label") }}
+                </div>
+                <div class="form-check">
+                    {{ form.technicians(class="form-check-input") }}
+                    {{ form.technicians.label(class="form-check-label") }}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+{% endblock content %}

@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block homepage %}
+    <a class="navbar-brand mr-4" href="{{ url_for('technician') }}">Radiology</a>
+{% endblock homepage %}
+{% block navbar %}
+    <a class="nav-item nav-link" href="{{ url_for('technician_history', id=current_user.id) }}">History</a>
+    <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+{% endblock navbar %}
+{% block content %}
+    <div class="content-section">
+
+        <div class="text-center">
+            <img style="width: 1000px; height:600px ;" src="{{ url_for('static', filename='patients_scans/'+scan.image_file) }}" class="img-responsive mx-auto d-block">
+        </div>
+        {% if scan.image_file == 'default.jpg' %}
+            <form method="POST" action="" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Patient Scan</legend>
+                    
+                    <div class="form-group">
+                        {{ form.picture.label() }}
+                        {{ form.picture(class="form-control-file") }}
+                        {% if form.picture.errors %}
+                            {% for error in form.picture.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
+                    </div>
+                    {% endif %}
+                </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+            </form>
+            {% endif %}
+    </div>
+{% endblock  %}

@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block homepage %}
+    <a class="navbar-brand mr-4" href="{{ url_for('technician') }}">Radiology</a>
+{% endblock homepage %}
+{% block navbar %}
+    <a class="nav-item nav-link" href="{{ url_for('technician_history') }}">History</a>
+    <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+{% endblock navbar %}
+{% block content %}
+
+<div class="container" style= "border-collapse: collapse; background-color: white;" id = "responsive">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3"> 
+                <h2> Add <b>Patients  Scans</b></h2>
+                <table class="table table-hover table-striped mydatatable" >
+                    <thead class="thead-dark">
+                        <tr>
+                            
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Reservation Date</th>
+                            <th>Scan Type</th>
+                            <th>Doctor</th>
+                            <th>Scan Fees</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in scans %}
+                            {% if row.image_file != 'default.jpg' %}
+                                <tr>
+                                    <td>{{row.id}}</td>
+                                    <td>{{row.patient.name}}</td>
+                                    <td>{{row.scan_date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                    <td>{{row.scan_type}}</td>
+                                    <td>{{row.doctor.name}}</td>
+                                    <td>{{row.fees}}</td>
+                                    <td>
+                                        <a href="{{url_for('add_scan_img', id=row.id )}}" class="btn btn-success" >View Scan</a>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                </table>
+             </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $('.mydatatable').DataTable({
+            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]]
+        });
+    </script>
+{% endblock scripts %}

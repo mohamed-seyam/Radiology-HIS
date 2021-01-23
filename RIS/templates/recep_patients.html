@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% block homepage %}
+    <a class="navbar-brand mr-4" href="{{ url_for('recep') }}">Radiology</a>
+{% endblock homepage %}
+{% block navbar %}
+    <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+{% endblock navbar %}
+{% block content %}
+<!-- patient profile-->
+
+<div class="container">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+                <h2>Receptionist {{ name }} <b>Patients</b></h2>
+                <table class="table table-hover table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>SSN</th>
+                            <th>Date</th>
+                            <th>Doctor</th>
+                            <th>Technician</th>
+                            <th>Gender</th>
+                            <th>Address</th>
+                            <th>Scan Type</th>
+                            <th>Scan Fees</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in p_data %}
+                            <tr>
+                                <td>{{row.patient.id}}</td>
+                                <td>{{row.patient.name}}</td>
+                                <td>{{row.patient.ssn}}</td>
+                                <td>{{row.scan_date.strftime('%Y/%m/%d') }}</td>
+                                <th>{{ row.doctor.id }}</th>
+                                <th>{{ row.technician.id }}</th>
+                                <td>{{row.patient.email}}</td>
+                                <td>{{row.patient.gender}}</td>
+                                <td>{{row.patient.address}}</td>
+                                <td>{{row.scan_type}}</td>
+                                <td>{{row.fees}}</td>
+                                <td>
+                                    <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs"
+                                        onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $('.mydatatable').DataTable({
+            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]]
+        });
+    </script>
+{% endblock scripts %}

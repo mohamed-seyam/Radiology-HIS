@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% block homepage %}
+    <a class="navbar-brand mr-4" href="{{ url_for('recep') }}">Radiology</a>
+{% endblock homepage %}
+{% block navbar %}
+    <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+{% endblock navbar %}
+{% block content %}
+<!-- content is the name of the block defined in the layout.html -->
+
+<div class="content-section">
+    <form method="POST" action="">
+        {{form.hidden_tag()}}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">
+                New Scan
+            </legend>
+
+
+
+            <!--ssn -->
+            <div class="form-group">
+                {{form.ssn.label(class = "form-control-label")}}
+                {% if form.ssn.errors %}
+                {{ form.ssn(class = "form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.ssn.errors %}
+                    <span> {{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.ssn(class = "form-control form-control-lg") }}
+                {% endif %}
+
+            </div>
+            <!---scan type -->
+            <div class="form-group">
+                {{ form.scan_type.label(class = "form-control-label") }}
+                {% if form.scan_type.errors %}
+                {{ form.scan_type(class = "form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.scan_type.errors %}
+                    <span> {{ error }}</span>
+                    {% endfor %}
+                </div>
+
+                {% else %}
+                {{ form.scan_type(class = "form-control form-control-lg") }}
+                {% endif %}
+
+            </div>
+
+            <!-- fees -->
+            <div class="form-group">
+                {{ form.fees.label(class = "form-control-label") }}
+                {% if form.fees.errors %}
+                {{ form.fees(class = "form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">fees
+                    {% for error in form.fees.errors %}
+                    <span> {{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.fees(class = "form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.doctor_ssn.label(class = "form-control-label") }}
+                {% if form.doctor_ssn.errors %}
+                {{ form.doctor_ssn(class = "form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">Doctor SSN
+                    {% for error in form.doctor_ssn.errors %}
+                    <span> {{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.doctor_ssn(class = "form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.technician_ssn.label(class = "form-control-label") }}
+                {% if form.technician_ssn.errors %}
+                {{ form.technician_ssn(class = "form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">Technician SSN
+                    {% for error in form.technician_ssn.errors %}
+                    <span> {{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.technician_ssn(class = "form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{form.submit(class= "btn btn-outline-info")}}
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% endblock content %}
